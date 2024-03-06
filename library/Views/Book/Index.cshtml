@@ -1,0 +1,95 @@
+﻿@model IEnumerable<library.Models.BookDTO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<main>
+
+    <div class="row flex-md-column ">
+        @if (ViewBag.Message != null)
+        {
+            <p class="alert alert-success" role="alert">
+                @ViewBag.Message
+            </p>
+
+        }
+
+        <p class="">
+            @Html.ActionLink("Create New", "Create")
+        </p>
+
+        <p class="">
+            @using (Html.BeginForm("Index", "Book", FormMethod.Get))
+            {
+                <b> Search by</b>
+                @Html.RadioButton("searchby", "Title")<b> Title</b> 
+                @Html.RadioButton("searchby", "Author") <b> Author</b>
+                @Html.RadioButton("searchby", "ISBN") <b class="me-5"> ISBN</b>
+                @Html.RadioButton("searchby", "All") <b class="me-5"> All</b>
+                @Html.TextBox("search") <input type="submit" value="Search" />
+            }
+        </p>
+
+
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (var item in Model)
+
+                {
+                    <tr>
+                        <th scope="row">#</th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Author)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ISBN)
+                        </td>
+                        <td>
+                            @if (item.Status == 0)
+                            {
+                                <b>Available</b>
+                            }
+                            else
+                            {
+                                <b>Checked out</b>
+
+                            }
+
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "DeleteBook", new { id = item.Id }) 
+              
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+            <td colspan="4" class="text-center"><b>No Data Available . Please Add Data By CLick On Create Button</b></td>
+        }
+
+            </tbody>
+        </table>
+
+    </main>

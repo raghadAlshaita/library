@@ -1,0 +1,63 @@
+﻿@model IEnumerable<library.Models.UserDTO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row flex-md-column ">
+    @if (ViewBag.Message != null)
+    {
+        <p class="alert alert-success" role="alert">
+            @ViewBag.Message
+        </p>
+
+    }
+
+    <p class="">
+        @Html.ActionLink("Create New", "Create")
+    </p>
+
+    <p class="">
+        @using (Html.BeginForm("Index", "User", FormMethod.Get))
+        {
+            <b> Search by</b>
+            @Html.RadioButton("searchby", "UserName")<b> UserName</b>
+            @Html.TextBox("search") <input type="submit" value="Search" />
+        }
+    </p>
+
+
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.IsActivate)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActivate)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
